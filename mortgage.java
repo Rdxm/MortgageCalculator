@@ -3,48 +3,29 @@ import java.text.NumberFormat;
 
 class mortgage{
 	public static void main(String[] args) {
+		int principal = (int)readNumber("Principal ($1K - $1M): ", 1000000, 1000);
+		float annualInterstRate = (float)readNumber("Annual Interest Rate: ", 30, 1);
+		byte period = (byte)readNumber("Years: ", 30, 1);
 		
-
-		int principal=0;
-		float annualInterstRate=0;
-		byte period=0;
-
-		Scanner scanner = new Scanner(System.in);
-
-		
-		while (true) { 
-			System.out.print("Principal ($1K - $1M): ");
-			principal = scanner.nextInt();
-			if (principal > 1000 && principal < 1000000) {
-				break;
-			}
-			System.out.println("Enter a number btw 1,000 and 1,000,000");
-		}
-
-
-		while (true) {
-			System.out.print("Annual Interest Rate: ");
-			annualInterstRate = scanner.nextFloat();
-			if (annualInterstRate > 0 && annualInterstRate < 30) {
-				break;			
-			}
-			System.out.println("Enter a number btw 1 and 30");
-			
-		}
-		
-		while (true) {
-			System.out.print("Period (Years): ");
-			period = scanner.nextByte();	
-			if (period > 0 && period < 30) {
-				break		;
-			}
-			System.out.println("Enter a number btw 1 and 30.");
-		}
 		
 		double mortgage = calculateMortgage(principal, annualInterstRate, period);
 
 	  	String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
 		System.out.println("Mortgage: " + mortgageFormatted);
+	}
+
+	public static double readNumber(String prompt, double max, double min) {
+		Scanner scanner = new Scanner(System.in);
+		double value;
+		while (true) {
+			System.out.print(prompt);
+			value = scanner.nextFloat();
+			if (value > min && value < max) {
+				break;			
+			}
+			System.out.println("Enter a number btw "+min+" and "+max);
+		}
+		return value;
 	}
 
 	public static double calculateMortgage(int principal, float annualInterstRate, byte period) {
